@@ -57,17 +57,17 @@ class Trainer():
                 # Print training result.
                 print(f"Epoch: {self.current_epoch} | Loss: {total_loss / couter}", end="\r")
 
-                # Update current epoch.
-                self.current_epoch += 1
+            # Update current epoch.
+            self.current_epoch += 1
 
             # Output testing result.
-            self.test(10)
+            self.test(test_num=10, postprocess=False)
 
         # Set model to evaluation model.
         self.model.eval()
 
     @torch.no_grad()
-    def test(self, test_num: int) -> None:
+    def test(self, test_num: int, postprocess: bool=False, threshold: float=0.5) -> None:
         # Set defualt figure.
         figure = plt.figure(figsize=(10, 10))
 
@@ -86,6 +86,13 @@ class Trainer():
             # Get output image.
             y = self.model(x)
             y = y[0]
+
+            # Do postprocess.
+            if postprocess:
+                for r in range(28):
+                    for c in range(28):
+                        if y[0][r][c] <= threshold:
+                            y[0][r][c] = 0
 
             # Show input image.
             axes = figure.add_subplot(10, 10, i + 1)
