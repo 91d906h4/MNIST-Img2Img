@@ -6,17 +6,18 @@ from torch import nn
 class Img2Img(nn.Module):
     def __init__(self) -> None:
         super(Img2Img, self).__init__()
-        self.down1 = self.down(input_chennals=1, output_chennals=64, kernel_size=4, stride=2, padding=1)
-        self.down2 = self.down(input_chennals=64, output_chennals=128, kernel_size=4, stride=2, padding=1)
-        self.down3 = self.down(input_chennals=128, output_chennals=256, kernel_size=4, stride=2, padding=1)
+        self.input = nn.Conv2d(in_channels=1, out_channels=64, kernel_size=4, stride=2, padding=1)
+
+        self.down1 = self.down(input_chennals=64, output_chennals=128, kernel_size=4, stride=2, padding=1)
+        self.down2 = self.down(input_chennals=128, output_chennals=256, kernel_size=4, stride=2, padding=1)
 
         self.linear1 = nn.Linear(2304, 1024)
         self.linear2 = nn.Linear(1024, 2304)
 
-        self.up1 = self.up(input_chennals=256, output_chennals=128, kernel_size=3, stride=2, padding=0)
-        self.up2 = self.up(input_chennals=128, output_chennals=64, kernel_size=4, stride=2, padding=1)
+        self.up1 = self.up(input_chennals=256+256, output_chennals=128, kernel_size=3, stride=2, padding=0)
+        self.up2 = self.up(input_chennals=128+128, output_chennals=64, kernel_size=4, stride=2, padding=1)
 
-        self.convt1 = nn.ConvTranspose2d(64, 1, kernel_size=4, stride=2, padding=1)
+        self.output = nn.ConvTranspose2d(64, 1, kernel_size=4, stride=2, padding=1)
 
         self.flatten = nn.Flatten()
 
@@ -37,9 +38,10 @@ class Img2Img(nn.Module):
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.down1(x)
-        x = self.down2(x)
-        x = self.down3(x)
+        x = self.input(x)
+
+        x = x1 = self.down1(x)
+        x = x2 = self.down2(x)
 
         x = self.flatten(x)
 
@@ -48,10 +50,12 @@ class Img2Img(nn.Module):
 
         x = x.view(-1, 256, 3, 3)
 
+        x = torch.cat([x, x2], dim=1)
         x = self.up1(x)
+        x = torch.cat([x, x1], dim=1)
         x = self.up2(x)
 
-        x = self.convt1(x)
+        x = self.output(x)
 
         return x
 
