@@ -17,11 +17,14 @@ class Trainer():
         self.test_data      = test_data
         self.device         = device
 
+        # Set defualt values.
+        self.current_epoch  = 0
+
     def train(self, epoches) -> None:
         # Set model to training model.
         self.model.train()
 
-        for epoch in range(epoches):
+        for _ in range(epoches):
             # Set defualt values.
             total_loss  = 0
             couter      = 0
@@ -52,7 +55,10 @@ class Trainer():
                 self.optimizer.step()
 
                 # Print training result.
-                print(f"Epoch: {epoch} | Loss: {total_loss / couter}", end="\r")
+                print(f"Epoch: {self.current_epoch} | Loss: {total_loss / couter}", end="\r")
+
+                # Update current epoch.
+                self.current_epoch += 1
 
             # Output testing result.
             self.test(10)
@@ -69,23 +75,27 @@ class Trainer():
             # Get sample data with specified number.
             sample = self.test_data[i % 10]
 
-            # Get random data.
+            # Get random sample.
             r = random.randint(0, len(sample) - 1)
             x = sample[r]
-            x = x.unsqueeze(0).to(self.device)
+
+            # Make input data to a batch with size 2.
+            x = torch.stack([x, x])
+            x = x.to(self.device)
 
             # Get output image.
             y = self.model(x)
+            y = y[0]
 
             # Show input image.
             axes = figure.add_subplot(10, 10, i + 1)
             axes.set_axis_off()
-            plt.imshow(x.cpu().squeeze(), cmap="gray")
+            plt.imshow(x[0].cpu().squeeze(), cmap="gray")
 
             # Show output image.
             axes = figure.add_subplot(10, 10, i + 11)
             axes.set_axis_off()
-            plt.imshow(y.squeeze().detach().cpu(), cmap="gray")
+            plt.imshow(y.detach().cpu().squeeze(), cmap="gray")
 
         # Show figure.
         plt.show()
