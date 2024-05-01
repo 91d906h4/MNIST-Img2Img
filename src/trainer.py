@@ -87,7 +87,8 @@ class Trainer():
             y = self.model(x)
             y = y[0]
 
-            # Do postprocess.
+            # Postprocess.
+            # Replace pixel value to 0 if it's smaller than threshold.
             if postprocess:
                 for r in range(28):
                     for c in range(28):
