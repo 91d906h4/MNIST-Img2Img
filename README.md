@@ -55,6 +55,10 @@ Nonetheless, our architecture's quickness and computational efficiency are a not
 
 In summary, while our U-Net architecture may not achieve state-of-the-art results in image-to-image translation compared to GANs, its speed and simplicity make it a viable alternative for applications where computational resources are limited or training time is a critical factor.
 
+## License
+
+This project is licensed under the [PROPRIETARY LICENSE](https://github.com/91d906h4/MNIST-Img2Img/blob/main/LICENSE), which prohibits any use, copying, modification, or distribution of the software without explicit written permission from the copyright holder.
+
 ## References
 
 [1] M. Arjovsky, S. Chintala, and L. Bottou, "Wasserstein GAN," arXiv:1701.07875 [stat.ML], Jan. 2017. [Online]. Available: https://arxiv.org/abs/1701.07875<br />
