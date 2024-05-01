@@ -5,7 +5,7 @@
 One of the core tasks in computer vision is image-to-image translation, which is the conversion of an input image into an equivalent output image. Although Generative Adversarial Networks (GANs) have been extensively employed for these kinds of tasks, this study investigates a different strategy that makes use of the U-Net architecture. Because U-Net can capture both local and global information, it has demonstrated promising results in a variety of image-to-image translation applications. Originally, U-Net was proposed for biological image segmentation. The purpose of this study is to examine U-Net's efficacy in image-to-image generation in the absence of GANs.
 
 <div align="center">
-    <img src="./assets/U-Net_architecture.png" />
+    <img src="./assets/U-Net_architecture.png" /><br />
     <i>Fig. 1. U-Net Architecture</i>
 </div><br />
 
@@ -34,19 +34,19 @@ For this experiment, we utilized the MNIST dataset, a widely used benchmark data
 The training process of the U-Net model using the Wasserstein loss function was monitored over 30 epochs. During each epoch, the model learned to minimize the Wasserstein distance between the generated images and the ground truth target images. The training process involved iteratively updating the model parameters using the RAdam optimizer with a fixed learning rate of 0.01.
 
 <div align="center">
-    <img src="./assets/w_loss_30_train.gif" />
+    <img src="./assets/w_loss_30_train.gif" /><br />
     <i>Fig. 2. 0-30 Epochs with Wasserstein Loss</i>
 </div><br />
 
 The training procedure from epoch 0 through epoch 30 is depicted in the above image. Since the model's predictions are far from the actual images, the Wasserstein loss is comparatively significant at the start of the training process (epoch 0). But as training goes on, the Wasserstein loss progressively drops, showing that the model is getting better at producing realistic and accurate images.
 
 <div align="center">
-    <img src="./assets/w_loss_1_train.png" />
+    <img src="./assets/w_loss_1_train.png" /><br />
     <i>Fig. 3. Result afert 1 Epoch of Training with Wasserstein Loss</i>
 </div><br />
 
 <div align="center">
-    <img src="./assets/w_loss_30_train.png" />
+    <img src="./assets/w_loss_30_train.png" /><br />
     <i>Fig. 4. Result afert 30 Epochs of Training with Wasserstein Loss</i>
 </div><br />
 
