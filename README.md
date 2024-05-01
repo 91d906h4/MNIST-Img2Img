@@ -31,19 +31,19 @@ The training process of the U-Net model using the Wasserstein loss function was 
 <div align="center">
     <img src="./assets/w_loss_30_train.gif" />
     <i>Figure 1: 0-30 Epochs with Wasserstein Loss</i>
-</div>
+</div><br />
 
 The training procedure from epoch 0 through epoch 30 is depicted in the above image. Since the model's predictions are far from the actual images, the Wasserstein loss is comparatively significant at the start of the training process (epoch 0). But as training goes on, the Wasserstein loss progressively drops, showing that the model is getting better at producing realistic and accurate images.
 
 <div align="center">
     <img src="./assets/w_loss_1_train.png" />
     <i>Figure 2: Result afert 1 Epoch of Training with Wasserstein Loss</i>
-</div>
+</div><br />
 
 <div align="center">
     <img src="./assets/w_loss_30_train.png" />
     <i>Figure 3: Result afert 30 Epochs of Training with Wasserstein Loss</i>
-</div>
+</div><br />
 
 The Wasserstein loss approaches a relatively low value by epoch 30, indicating that the U-Net model has mastered the ability to generate images that closely resemble the target images in terms of quality. This illustrates how well the Wasserstein loss function works to direct training and provide desired results in image-to-image translation challenges.
 
